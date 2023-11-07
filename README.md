@@ -1,2 +1,2 @@
 # pixel2048
-4x4px grid 2048
+40x40px grid 2048
