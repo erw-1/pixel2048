@@ -3,7 +3,7 @@ import random
 
 # Constants
 GRID_SIZE = 4
-TILE_SIZE = 10
+TILE_SIZE = 12
 GRID_WIDTH = GRID_SIZE * TILE_SIZE
 GRID_HEIGHT = GRID_SIZE * TILE_SIZE
 TXT_WIDTH = 120
@@ -11,8 +11,9 @@ WIDTH = GRID_WIDTH + TXT_WIDTH
 HEIGHT = GRID_HEIGHT
 
 # Colors
-WHITE = (60, 60, 60)
-RED = (255, 0, 0)
+WHITE = (255, 255, 255)
+GREY = (60, 60, 60)
+RED = (255, 60, 60)
 
 # Initialize the current biggest tile
 current_biggest_tile = 0
@@ -147,19 +148,19 @@ class Game2048:
 
     def draw_info(self):
         y_position = 1
-        score_text = self.font.render(f"Score: {self.score}", True, (0, 0, 0))
+        score_text = self.font.render(f"Score: {self.score}", True, WHITE)
         score_rect = score_text.get_rect()
         score_rect.topleft = (GRID_WIDTH + 10, y_position)
         self.window.blit(score_text, score_rect)
         y_position += 10
 
-        biggest_tile_text = self.font.render(f"Max tile: {Game2048.current_biggest_tile}", True, (0, 0, 0))
+        biggest_tile_text = self.font.render(f"Max tile: {Game2048.current_biggest_tile}", True, WHITE)
         biggest_tile_rect = biggest_tile_text.get_rect()
         biggest_tile_rect.topleft = (GRID_WIDTH + 10, y_position)
         self.window.blit(biggest_tile_text, biggest_tile_rect)
         y_position += 10
 
-        high_score_text = self.font.render(f"Highest: {self.high_score}", True, (0, 0, 0))
+        high_score_text = self.font.render(f"Highest: {self.high_score}", True, WHITE)
         high_score_rect = high_score_text.get_rect()
         high_score_rect.topleft = (GRID_WIDTH + 10, y_position)
         self.window.blit(high_score_text, high_score_rect)
@@ -180,7 +181,7 @@ class Game2048:
                 pygame.draw.rect(self.window, color, (j * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE))
 
     def render(self):
-        self.window.fill(WHITE)
+        self.window.fill(GREY)
         self.draw_board()
         self.draw_info()
         pygame.display.flip()
