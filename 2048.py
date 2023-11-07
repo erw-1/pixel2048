@@ -1,5 +1,6 @@
 import pygame
 import random
+import pygetwindow as gw
 
 # Constants
 GRID_SIZE = 4
@@ -49,6 +50,8 @@ class Game2048:
         pygame.init()
 
         # Initialize game variables and data structures
+        self.dragging = False
+        self.offset = (0, 0)
         self.score = 0
         self.high_score = self.load_high_score()
         self.game_over = False
@@ -145,6 +148,27 @@ class Game2048:
                 self.add_tile()
             if self.is_game_over():
                 self.game_over = True
+        
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            # Left mouse button pressed
+            x, y = pygame.mouse.get_pos()
+            if x < WIDTH and y < HEIGHT:
+                self.dragging = True
+                self.offset = (x, y)
+
+        elif event.type == pygame.MOUSEMOTION and self.dragging:
+            # Mouse moved while left button is held
+            x, y = pygame.mouse.get_pos()
+            dx, dy = x - self.offset[0], y - self.offset[1]
+            self.offset = (x, y)
+
+            # Move the window using PyGetWindow
+            window = gw.getWindowsWithTitle("2048 Game")[0]  # Adjust the title as needed
+            window.moveTo(window.left + dx, window.top + dy)
+
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+            # Left mouse button released
+            self.dragging = False
 
     def draw_info(self):
         y_position = 1
